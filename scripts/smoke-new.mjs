@@ -14,7 +14,7 @@ import path from 'node:path';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const jiti = createJiti(__dirname, { interopDefault: true });
 
-const { renameBinding, listBindings, replayRenameMap } = await jiti.import(
+const { renameBinding, listBindings, replayRenameMap, batchRenameBindings } = await jiti.import(
   '../src/utils/rename.ts',
 );
 const { upsertAnnotation, migrateAnnotationOnRename, findAnnotation } = await jiti.import(
@@ -117,7 +117,25 @@ console.log('\n[4] legacy rename-map replay (no scopePath)');
 }
 
 // --- 5. annotations: upsert, key by name+scopePath ---
-console.log('\n[5] annotation store');
+console.log('\n[5] class declarations are queued once');
+{
+  const src = `class _0x1448da { constructor(){} } const _0x14d470 = new _0x1448da();`;
+  const classes = listBindings(src).filter((b) => b.name === '_0x1448da' && b.kind === 'class');
+  check('one class binding found', classes.length === 1, `got ${classes.length}`);
+  check('class binding is the outer binding', classes[0]?.scopePath === 'Program', classes[0]?.scopePath);
+
+  const result = batchRenameBindings(src, [
+    { from: '_0x1448da', to: 'class1', scopePath: 'Program' },
+    { from: '_0x1448da', to: 'class2', scopePath: 'Program>ClassDeclaration[_0x1448da]' },
+  ]);
+  check('stale duplicate class op skipped', result.applied.length === 1 && result.skipped.length === 1,
+    `applied=${result.applied.length}, skipped=${result.skipped.length}`);
+  check('constructor uses renamed class', /new class1\(\)/.test(result.code));
+  check('class declaration matches constructor', /class class1/.test(result.code) && !/class class2/.test(result.code));
+}
+
+// --- 6. annotations: upsert, key by name+scopePath ---
+console.log('\n[6] annotation store');
 {
   let anns = [];
   anns = upsertAnnotation(anns, { name: 'x', scopePath: 'A', note: 'outer', ts: 1 });
@@ -131,8 +149,8 @@ console.log('\n[5] annotation store');
   check('empty note removes annotation', anns.length === 1 && !findAnnotation(anns, 'x', 'A'));
 }
 
-// --- 6. annotation migrates on rename ---
-console.log('\n[6] annotation migrates on rename');
+// --- 7. annotation migrates on rename ---
+console.log('\n[7] annotation migrates on rename');
 {
   let anns = [
     { name: '_0xa1b2', scopePath: 'Program>FunctionDeclaration[foo]', note: 'the decoder', ts: 1 },
@@ -144,8 +162,8 @@ console.log('\n[6] annotation migrates on rename');
   check('total count unchanged', anns.length === 2);
 }
 
-// --- 7. project file validation ---
-console.log('\n[7] project file validation');
+// --- 8. project file validation ---
+console.log('\n[8] project file validation');
 {
   const cfg = { steps: [], engine: 'none', printWidth: 100, indentSize: 2, parseJsx: false, parseTypescript: false, includeAstTree: true, wakaruAggressive: false };
   const proj = buildProjectFile({ fileName: 'a.js', input: 'x', output: 'y', config: cfg, renames: [], annotations: [] });

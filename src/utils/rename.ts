@@ -49,6 +49,10 @@ function classHasInstanceMethodNamed(
   return ok;
 }
 
+function isClassDeclarationSelfBinding(scopePath: NodePath, bindingPath: NodePath): boolean {
+  return scopePath.isClassDeclaration() && bindingPath === scopePath;
+}
+
 function renameClassInstancePropertyAst(
   classPath: NodePath<t.ClassDeclaration | t.ClassExpression>,
   oldName: string,
@@ -448,6 +452,7 @@ export function listBindings(code: string): BindingLocation[] {
       const sp = scopePathOf(path.scope);
       for (const name of Object.keys(bindings)) {
         const b = bindings[name];
+        if (isClassDeclarationSelfBinding(path, b.path)) continue;
         const loc = b.identifier.loc;
         if (!loc) continue;
         const key = `${name}@${sp}@${loc.start.line}:${loc.start.column}`;
@@ -602,6 +607,7 @@ export function batchRenameBindings(code: string, ops: BatchRenameOp[]): BatchRe
       const sp = scopePathOf(path.scope);
       for (const name of Object.keys(path.scope.bindings)) {
         const b = path.scope.bindings[name];
+        if (isClassDeclarationSelfBinding(path, b.path)) continue;
         byNameAndPath.set(`${name}@${sp}`, { kind: 'lexical', scope: path.scope, scopePath: sp });
         const line = b.identifier.loc?.start.line;
         if (line != null) {
