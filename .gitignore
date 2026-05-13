@@ -1,0 +1,61 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+dist-ssr/
+build/
+*.local
+
+# Vite
+.vite/
+
+# TypeScript (project references / incremental)
+*.tsbuildinfo
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Logs and debug
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Caches
+.cache/
+.eslintcache
+.parcel-cache/
+.turbo/
+
+# Test / coverage (if added later)
+coverage/
+.nyc_output/
+
+# Deploy / SaaS tooling (if added later)
+.vercel/
+
+# Editor and IDE
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Windows / Visual Studio misc
+*.suo
+*.ntvs*
+*.njsproj
+*.sln

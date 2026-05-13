@@ -1,0 +1,50 @@
+{
+  "name": "deob-workbench",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@babel/generator": "^7.29.1",
+    "@babel/parser": "^7.29.3",
+    "@babel/traverse": "^7.29.0",
+    "@babel/types": "^7.29.0",
+    "@monaco-editor/react": "^4.7.0",
+    "@tailwindcss/vite": "^4.3.0",
+    "@types/babel__generator": "^7.27.0",
+    "@types/babel__traverse": "^7.28.0",
+    "@types/js-beautify": "^1.14.3",
+    "@wakaru/unminify": "^0.2.2",
+    "assert": "^2.1.0",
+    "buffer": "^6.0.3",
+    "deobfuscator": "^2.4.5",
+    "events": "^3.3.0",
+    "js-beautify": "^1.15.4",
+    "monaco-editor": "^0.55.1",
+    "path-browserify": "^1.0.1",
+    "process": "^0.11.10",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "tailwindcss": "^4.3.0",
+    "webcrack": "^2.16.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^24.12.3",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
+    "eslint": "^10.3.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.2",
+    "globals": "^17.6.0",
+    "typescript": "~6.0.2",
+    "typescript-eslint": "^8.59.2",
+    "vite": "^8.0.12"
+  }
+}
