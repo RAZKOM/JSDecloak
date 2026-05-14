@@ -19,6 +19,10 @@ A browser workbench for obfuscated JavaScript: pipeline passes, scope-aware rena
 
 [![Ko-fi](https://img.shields.io/badge/Ko--fi-Support-ff5e5b?logo=ko-fi&logoColor=white)](https://ko-fi.com/razkom)
 
+<br />
+
+<img src="docs/assets/demo.gif" alt="Screen recording of JSDecloak: obfuscated JavaScript in the input pane, run pipeline, cleaned output, AST drawer, and rename flow" width="840" />
+
 </div>
 
 ---
