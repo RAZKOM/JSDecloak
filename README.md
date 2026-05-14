@@ -8,6 +8,15 @@
 
 A browser workbench for obfuscated JavaScript: pipeline passes, scope-aware renames, no backend.
 
+<br />
+
+<a href="https://jsdecloak.razkom.com" rel="noopener noreferrer" target="_blank" title="Open the hosted JSDecloak app">
+  <img
+    src="https://img.shields.io/badge/Open_live_app-jsdecloak.razkom.com-4f46e5?style=for-the-badge&logo=googlechrome&logoColor=white&labelColor=1e1b4b"
+    alt="Open JSDecloak live app at jsdecloak.razkom.com"
+  />
+</a>
+
 [![Ko-fi](https://img.shields.io/badge/Ko--fi-Support-ff5e5b?logo=ko-fi&logoColor=white)](https://ko-fi.com/razkom)
 
 </div>
